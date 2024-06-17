@@ -1,0 +1,234 @@
+#!/bin/bash
+
+#This script was created the 07/06/2024 to simplify my schoolwork @ Holberton school Thonon-les-bains France
+#I was pretty much annoyed by the amount of scripts i needed to create for several exercises around almost 50
+#so i decided to do some automation : at first it was  about the chmod to execute the script and push it to github.
+#Finally i decided to spice it up a bit with conditions, as for some exercises i was meant to create a file in random dirs
+#Or cp the script to some dirs, so i implemented these features as well.
+#This script is meant to evolve along with my schoolwork needs
+
+clear
+
+
+
+echo
+
+echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::";
+echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::";
+echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::";
+echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::";
+echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::";
+echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::";
+echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::";
+echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::";
+echo "::::'######:::'######::'########::'####:'########::'########:::::::'########::'##::::'##:'####:'##:::::::'########::'########:'########:::::::::::'##::::::::::'#####::::::";
+echo ":::'##... ##:'##... ##: ##.... ##:. ##:: ##.... ##:... ##..:::::::: ##.... ##: ##:::: ##:. ##:: ##::::::: ##.... ##: ##.....:: ##.... ##::::::::'####:::::::::'##.. ##:::::";
+echo "::: ##:::..:: ##:::..:: ##:::: ##:: ##:: ##:::: ##:::: ##:::::::::: ##:::: ##: ##:::: ##:: ##:: ##::::::: ##:::: ##: ##::::::: ##:::: ##::::::::.. ##::::::::'##:::: ##::::";
+echo ":::. ######:: ##::::::: ########::: ##:: ########::::: ##:::::::::: ########:: ##:::: ##:: ##:: ##::::::: ##:::: ##: ######::: ########::::::::::: ##:::::::: ##:::: ##::::";
+echo "::::..... ##: ##::::::: ##.. ##:::: ##:: ##.....:::::: ##:::::::::: ##.... ##: ##:::: ##:: ##:: ##::::::: ##:::: ##: ##...:::: ##.. ##:::::::::::: ##:::::::: ##:::: ##::::";
+echo ":::'##::: ##: ##::: ##: ##::. ##::: ##:: ##::::::::::: ##:::::::::: ##:::: ##: ##:::: ##:: ##:: ##::::::: ##:::: ##: ##::::::: ##::. ##::::::::::: ##:::'###:. ##:: ##:::::";
+echo ":::. ######::. ######:: ##:::. ##:'####: ##::::::::::: ##:::::::::: ########::. #######::'####: ########: ########:: ########: ##:::. ##::::::::'######: ###::. #####::::::";
+echo "::::......::::......:::..:::::..::....::..::::::::::::..:::::::::::........::::.......:::....::........::........:::........::..:::::..:::::::::......::...::::.....:::::::";
+echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::";
+echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::";
+echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::";
+echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::";
+echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::";
+echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::";
+echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::";
+echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::";
+
+echo "Script by Fassih Belmokhtar - You can do what you want : feel free to fork !"
+
+
+# Storing the IFS default value before giving a specific value.
+oldIFS=$IFS
+IFS=
+
+# First prompting user if additional files needed, where it has to be stored. validation input, validation of the destination directory.
+
+echo
+echo "Hello There !"
+echo
+read -p "Do you need to create an additional file for your assignment? Y or N: " -n 1 -r secondary_file_creation
+echo
+
+if [[ $secondary_file_creation =~ ^[Yy]$ ]]; then
+    while true; do
+        echo
+        read -re -p "Please type the name of the file you need to create: " secondary_file_name
+        if [[ -z $secondary_file_name ]]; then
+            echo "Filename cannot be empty."
+            echo
+        elif [[ ! $secondary_file_name =~ ^[a-zA-Z0-9_-]+$ ]]; then
+            echo "Please, only use alphanumeric characters, dashes \"-\" or underscore \"_\""
+            echo
+        else
+            break
+        fi
+        
+        read -p "Retry? Y or N: " -n 1 -r retry
+        echo
+        
+        if [[ ! $retry =~ ^[Yy]$ ]]; then
+            echo "Exiting the script."
+            exit 1
+        fi
+    done
+    echo
+    read -p "Does it have to be stored somewhere else than the current directory? Y or N: " -n 1 -r secondary_file_storage
+    echo
+
+    if [[ $secondary_file_storage =~ ^[Yy]$ ]]; then
+        while true; do
+            echo
+            read -re -p "Please type the ABSOLUTE path for your file: " secondary_file_path
+
+            if [[ ! $secondary_file_path =~ ^/ ]]; then
+                echo "This is not an absolute path, it shall start with '/'."
+            elif [[ ! -d $secondary_file_path ]]; then
+                read -p "The path doesn't exist. Would you like to create it? Y or N: " -n 1 -r create_secondary_path
+
+                if [[ $create_secondary_path =~ ^[Yy]$ ]]; then
+                    mkdir -p "$secondary_file_path"
+                    break
+                else
+                    read -p "Retry? Y or N: " -n 1 -r retry
+                    echo
+                    if [[ ! $retry =~ ^[Yy]$ ]]; then
+                        echo "Exiting the script."
+                        exit 1
+                    fi
+                fi
+            else
+                break
+            fi
+        done
+    fi
+
+    touch "$secondary_file_path/$secondary_file_name"
+    echo
+    echo "Now that we have created the additional file for your assignment, let's move forward!"
+else
+    echo
+    echo "No additional file needed, no additional file created."
+fi
+
+# Let's create the script, add the command ins
+echo
+read -p "Please, type the script's filename (no whitespace): " -r filename
+if [[ $filename =~ ^[a-zA-Z0-9_-]+$ ]]; then
+    while true; do
+        echo
+        read -re -p "Please, type the command to execute with the script: " command_line
+        echo '#!/bin/bash' > "$filename"
+        echo "$command_line" >> "$filename"
+        echo
+        echo "The script is now created!"
+        echo
+        read -p "Do you need to copy this script somewhere else? Y or N: " -n 1 -r copy_reply
+        if [[ $copy_reply =~ ^[Yy]$ ]]; then
+            echo
+            read -re -p "Please, type the absolute path: " copy_path
+            if [[ ! $copy_path =~ ^/ ]]; then
+                echo
+                echo "This is not an absolute path, it shall start with '/'."
+            elif [[ ! -d $copy_path ]]; then
+                echo
+                read -p "This path doesn't exist, would you like to create it? Y or N: " -n 1 -r create_path
+                if [[ $create_path =~ ^[Yy]$ ]]; then
+                    mkdir -p "$copy_path"
+                    cp "$filename" "$copy_path"
+                    echo
+                    echo "File created !"
+                    break
+                else
+                    echo
+                    read -p "Retry? Y or N: " -n 1 -r retry
+                    if [[ ! $retry =~ ^[Yy]$ ]]; then
+                        echo
+                        echo "Exiting the script."
+                        exit 1
+                    fi
+                fi
+            else
+                break
+            fi
+        else
+            break
+        fi
+    done
+    echo
+    echo "Please, documentation is important. Consider filling the next part with a lot of details."
+    echo "What will your script do? (expected format: $filename ---> DESCRIPTION)"
+    echo
+    read -re -p "Description: " script_documentation
+    echo -n -e '\n' >> README.md
+    echo "$filename ---> $script_documentation" >> README.md
+    echo -n -e '\n' >> README.md
+    echo
+    echo "The README.md file has been updated!"
+    chmod 700 "$filename"
+    echo
+    echo "Permission 700 applied to $filename!"
+    echo
+    echo "Let's now add this script to your repository."
+    echo
+    git add .
+    echo "What is your commit message?"
+    read -re -p "Commit message: " commit_message
+    echo
+    git commit -m "$commit_message"
+    echo
+    git push
+    echo
+    echo "Everything seems fine. It's time to execute the $command_line command you've put in $filename:"
+    # Execution of the freshly created script
+    echo
+    read -re -p "Do you really want to execute this script ? Y or N ?" -n 1 script_exec
+    if [[ $script_exec =~ ^[Yy]$ ]]; then
+        while true; do
+            echo
+            read -re -p "this script will execute this : $command_line. Are you Sure ? Y or N ?" -n 1 are_you_sure
+            if [[ $are_you_sure =~ ^[Yy]$ ]]; then
+                ./"$filename"
+		break
+            elif [[ ! $are_you_sure =~ ^[Nn]$ ]]; then
+            	echo
+            	echo "either way you missclicked, or you didn't answer right"
+	    	break
+            else
+                echo
+                echo "Ok this script hasn't been executed, be sure that won't mess with the result of your assignement."
+                break
+            fi
+        done
+    else
+        echo
+        echo "Ok this script hasn't been executed, be sure that won't mess with the result of your assignement."
+    	break	
+    fi
+    # Restoring the IFS value to its default
+    IFS=$oldIFS
+    # Congratulating the user! All tasks are now completed
+    clear
+    echo
+    echo "Awesome! We're done here. You can now review your code on Holberton's intranet. You sure did an amazing job today!"
+    echo
+    echo
+    echo ":::'##:::::'##:'########:'####:'########::'########:::::::'########:::'#######::'##::: ##:'########:::::::'##::::'##:'########:'########::'########::::";
+    echo "::: ##:'##: ##: ##.....:: ####: ##.... ##: ##.....:::::::: ##.... ##:'##.... ##: ###:: ##: ##.....:::::::: ##:::: ##: ##.....:: ##.... ##: ##.....:::::";
+    echo "::: ##: ##: ##: ##:::::::. ##:: ##:::: ##: ##::::::::::::: ##:::: ##: ##:::: ##: ####: ##: ##::::::::::::: ##:::: ##: ##::::::: ##:::: ##: ##::::::::::";
+    echo "::: ##: ##: ##: ######:::'##::: ########:: ######::::::::: ##:::: ##: ##:::: ##: ## ## ##: ######::::::::: #########: ######::: ########:: ######::::::";
+    echo "::: ##: ##: ##: ##...::::..:::: ##.. ##::: ##...:::::::::: ##:::: ##: ##:::: ##: ##. ####: ##...:::::::::: ##.... ##: ##...:::: ##.. ##::: ##...:::::::";
+    echo "::: ##: ##: ##: ##::::::::::::: ##::. ##:: ##::::::::::::: ##:::: ##: ##:::: ##: ##:. ###: ##::::::::::::: ##:::: ##: ##::::::: ##::. ##:: ##::::::::::";
+    echo ":::. ###. ###:: ########::::::: ##:::. ##: ########::::::: ########::. #######:: ##::. ##: ########::::::: ##:::: ##: ########: ##:::. ##: ########::::";
+    echo "::::...::...:::........::::::::..:::::..::........::::::::........::::.......:::..::::..::........::::::::..:::::..::........::..:::::..::........:::::";
+
+    echo 
+elif [[ -z $filename ]]; then
+    echo
+    echo "Filename cannot be empty, can only contain alphanumeric characters, dashes \"-\" or underscore \"_\"."
+else 
+    echo " something went wrong !"
+fi
