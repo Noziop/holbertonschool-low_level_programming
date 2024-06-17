@@ -1,5 +1,5 @@
-#include <stdio.h>
 /* including the std input/ouput lib */
+#include <stdio.h>
 /* launching the main function*/
 int main(void)
 {
