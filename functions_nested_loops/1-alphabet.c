@@ -1,6 +1,8 @@
 #include "main.h"
 /**
- * 
+ * print_alphabet - writes the alphabet to stdout
+ *
+ *
  */
 void print_alphabet(void)
 {
