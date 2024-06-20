@@ -9,7 +9,7 @@ void print_alphabet(void)
 	char az[26] = "abcdefghijklmnopqrstuvwxyz";
 	int i;
 
-	for (i = 0; i <= 26; i++)
+	for (i = 0; i < 26; i++)
 	{
 		_putchar(az[i]);
 	}
