@@ -1,0 +1,426 @@
+#!/bin/bash
+
+
+##################################################################################################################################################
+# Hi !  i'm Fassih (yup, it's my firstname)																										 #
+# i'm a student @Holberton_school in Thonon les bains (Haute-Savoie, France), the date is : 20/06/2024 (CET - central european time).			 #
+# I've just started Holberton School on 03/06/2024, but this allowed me to remember something I had long forgotten: I LOVE TO SIMPLIFY MY WORK.	 #
+# 																																				 #
+# this is my first project in bash scripting, obv : it didn't came out, out of my mind just like that in the middle of night.					 #
+# on 2nd week, we had several bash scripts to push to our github. I won't lie : i was annoyed by repeating task over and over					 #
+# So, i decided that automation was the key : why typing 3 commands in a few seconds, when you can spend days to bring automation all the way ?  #
+# because you're not gonna spend those precious seconds typing those command all your life.														 #
+# 																																				 #
+# this script is meant to automate the process of pushing changes to a remote repository. and maybe you'll find, i hope, some little treats.	 #
+# i don't mean to change world's face, but if it helped anyone of you. be my guest : make yourself at home (but never forget this is mine.)		 #
+#																																				 #
+# This script is provided as it is. it is not perfect, perfection wasn't the point.																 #
+# you can use this script as you want, but don't forget to give credits where credits are due, and if you want to improve it, feel free !		 #
+# nonetheless it would be highly appreciated if you get me posted about the fork you made :)													 #
+# let's us share some knowledge ! (if you ever need to reach me, please feel free to contact me here : holbie_bash-script@fassih.ch)			 #
+#																																				 #
+# let's get to it, will you ?																													 #
+#																																				 #
+##################################################################################################################################################
+
+########################################################################################################################
+#																													   #
+# First : let's store the IFS into a variable, then define a new value to IFS, it will here restore it after the script#
+#																													   #
+########################################################################################################################
+
+OLDIFS=$IFS
+IFS=
+
+########################################################################################################################
+#																													   #
+# Now, let's add some spice in it and declare all the fonction we gonna use in the main ! First : the banners !		   #
+#																													   #
+# i used : https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20 to build those				   #
+#																													   #
+# thx to them <3																									   #
+########################################################################################################################
+
+
+# Function to print the banner
+print_banner() {
+    cat << 'EOF'
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::::'######:::'######::'########::'####:'########::'########:::::::'########::'##::::'##:'####:'##:::::::'########::'########:'########:::::::::::'##::::::::::'#####::::::
+:::'##... ##:'##... ##: ##.... ##:. ##:: ##.... ##:... ##..:::::::: ##.... ##: ##:::: ##:. ##:: ##::::::: ##.... ##: ##.....:: ##.... ##::::::::'####:::::::::'##.. ##:::::
+::: ##:::..:: ##:::..:: ##:::: ##:: ##:: ##:::: ##:::: ##:::::::::: ##:::: ##: ##:::: ##:: ##:: ##::::::: ##:::: ##: ##::::::: ##:::: ##::::::::.. ##::::::::'##:::: ##::::
+:::. ######:: ##::::::: ########::: ##:: ########::::: ##:::::::::: ########:: ##:::: ##:: ##:: ##::::::: ##:::: ##: ######::: ########::::::::::: ##:::::::: ##:::: ##::::
+::::..... ##: ##::::::: ##.. ##:::: ##:: ##.....:::::: ##:::::::::: ##.... ##: ##:::: ##:: ##:: ##::::::: ##:::: ##: ##...:::: ##.. ##:::::::::::: ##:::::::: ##:::: ##::::
+:::'##::: ##: ##::: ##: ##::. ##::: ##:: ##::::::::::: ##:::::::::: ##:::: ##: ##:::: ##:: ##:: ##::::::: ##:::: ##: ##::::::: ##::. ##::::::::::: ##:::'###:. ##:: ##:::::
+:::. ######::. ######:: ##:::. ##:'####: ##::::::::::: ##:::::::::: ########::. #######::'####: ########: ########:: ########: ##:::. ##::::::::'######: ###::. #####::::::
+::::......::::......:::..:::::..::....::..::::::::::::..:::::::::::........::::.......:::....::........::........:::........::..:::::..:::::::::......::...::::.....:::::::
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+EOF
+}
+
+# Function to print the footer banner
+print_footer_banner() {
+    cat << 'EOF'
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::    
+:::'##:::::'##:'########:'####:'########::'########:::::::'########:::'#######::'##::: ##:'########:::::::'##::::'##:'########:'########::'########:::::
+::: ##:'##: ##: ##.....:: ####: ##.... ##: ##.....:::::::: ##.... ##:'##.... ##: ###:: ##: ##.....:::::::: ##:::: ##: ##.....:: ##.... ##: ##.....::::::
+::: ##: ##: ##: ##:::::::. ##:: ##:::: ##: ##::::::::::::: ##:::: ##: ##:::: ##: ####: ##: ##::::::::::::: ##:::: ##: ##::::::: ##:::: ##: ##:::::::::::
+::: ##: ##: ##: ######:::'##::: ########:: ######::::::::: ##:::: ##: ##:::: ##: ## ## ##: ######::::::::: #########: ######::: ########:: ######:::::::
+::: ##: ##: ##: ##...::::..:::: ##.. ##::: ##...:::::::::: ##:::: ##: ##:::: ##: ##. ####: ##...:::::::::: ##.... ##: ##...:::: ##.. ##::: ##...::::::::
+::: ##: ##: ##: ##::::::::::::: ##::. ##:: ##::::::::::::: ##:::: ##: ##:::: ##: ##:. ###: ##::::::::::::: ##:::: ##: ##::::::: ##::. ##:: ##:::::::::::
+:::. ###. ###:: ########::::::: ##:::. ##: ########::::::: ########::. #######:: ##::. ##: ########::::::: ##:::: ##: ########: ##:::. ##: ########:::::
+::::...::...:::........::::::::..:::::..::........::::::::........::::.......:::..::::..::........::::::::..:::::..::........::..:::::..::........::::::
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+EOF
+}
+
+#####################################################################################################################
+# Now, we define the functions that provide the fonctionality														#
+#####################################################################################################################
+
+# check if a file exists, before creating it.
+check_file_exists() {
+    if [ -e "$1" ]; then
+        return 0  # File exists
+    else
+        return 1  # File does not exist
+    fi
+}
+
+# create a main file, its content and its destination. Permissions for file is asked in case of specific needs
+create_main_file() {
+    while true; do
+        echo "Enter the name of the main file:"
+        read main_filename
+        if [ -z "$main_filename" ]; then
+            echo "Error: The file name must not be empty. Please enter a valid name."
+            continue
+        fi
+
+        if check_file_exists "$main_filename"; then
+            echo "Error: The file '$main_filename' already exists. Enter a different name or 'q' to cancel:"
+            read retry_response
+            if [ "$retry_response" = "q" ]; then
+                echo "Operation cancelled."
+                return
+            fi
+        else
+            break
+        fi
+    done
+
+    echo "Enter the destination of the file ('.' for the current directory):"
+    read destination
+    if [ "$destination" != "." ] && [ ! -d "$destination" ]; then
+        echo "The directory '$destination' does not exist. Do you want to create it? (y/n)"
+        read create_dir
+        if [ "$create_dir" = "y" ]; then
+            mkdir -p "$destination"
+        else
+            echo "Operation cancelled."
+            return
+        fi
+    fi
+
+    echo "Enter the content of the file (CTRL+D to finish):"
+    cat > "$destination/$main_filename"
+
+    while true; do
+        echo "Does the file require special permissions? (e.g., 'u+x,g+r,o-w' or 'none' for no special permissions)"
+        read permissions
+        if [ "$permissions" = "none" ] || [[ "$permissions" =~ ^[ugoa]*[-+=]rwx$ ]]; then
+            break
+        else
+            echo "chmod: invalid mode: '$permissions'"
+            echo "Try 'chmod --help' for more information."
+            echo "Error: Invalid permissions format. Please retry."
+        fi
+    done
+
+    if [ "$permissions" != "none" ]; then
+        chmod "$permissions" "$destination/$main_filename"
+    fi
+
+    echo "Main file created successfully."
+    echo
+    echo "Press CTRL+X to return to the main menu."
+    while : ; do
+        read -rsn1 input
+        if [ "$input" = $'\x18' ]; then  # CTRL+X
+            break
+        fi
+    done
+}
+
+# create secondary files
+create_secondary_files() {
+    while true; do
+        echo "Enter the number of secondary files to create:"
+        read num_files
+        if [[ ! "$num_files" =~ ^[0-9]+$ ]]; then
+            echo "Error: Please enter a valid number."
+            continue
+        fi
+        break
+    done
+
+    for (( i=1; i<=$num_files; i++ )); do
+        echo "Enter the name of secondary file $i:"
+        read secondary_filename
+        echo "Enter the destination for secondary file $i ('.' for current directory):"
+        read secondary_destination
+        if [ "$secondary_destination" != "." ] && [ ! -d "$secondary_destination" ]; then
+            echo "The directory '$secondary_destination' does not exist. Do you want to create it? (y/n)"
+            read create_dir
+            if [ "$create_dir" = "y" ]; then
+                mkdir -p "$secondary_destination"
+            else
+                echo "Skipping creation of file '$secondary_filename'."
+                continue
+            fi
+        fi
+
+        echo "Enter the content of secondary file $i (CTRL+D to finish):"
+        cat > "$secondary_destination/$secondary_filename"
+
+        echo "Secondary file '$secondary_filename' created successfully."
+    done
+
+    echo
+    echo "Press CTRL+X to return to the main menu."
+    while : ; do
+        read -rsn1 input
+        if [ "$input" = $'\x18' ]; then  # CTRL+X
+            break
+        fi
+    done
+}
+
+handle_c_files() {
+    while true; do
+        # Prompt the user for the name of the C file to compile
+        echo "Enter the name of the C file to compile:"
+        read c_filename
+
+        # Check if the file name ends with .c
+        if [[ "$c_filename" == *.c ]]; then
+            # Prompt the user for the compilation command (excluding the file name)
+            echo "Enter the compilation command (e.g., 'gcc -o output'):"
+            read compile_command
+
+            # Compile the C file by combining the command and file name
+            echo "Compiling '$c_filename'..."
+            if eval "$compile_command $c_filename"; then
+                echo "Compilation successful."
+                sleep 2
+                break
+            else
+                echo "Compilation failed."
+                echo "Do you want to retry compilation? (y/n)"
+                read retry_compile
+                if [ "$retry_compile" = "n" ]; then
+                    break
+                fi
+            fi
+        else
+            echo "Error: '$c_filename' is not a C file (*.c extension required)."
+        fi
+    done
+
+    echo
+    echo "Press CTRL+X to return to the main menu."
+    while : ; do
+        read -rsn1 input
+        if [ "$input" = $'\x18' ]; then  # CTRL+X
+            break
+        fi
+    done
+}
+
+# handle Git operations
+handle_git() {
+    echo "Enter the names of files to add to Git repository (space-separated):"
+    read -a files_to_add
+
+    for file in "${files_to_add[@]}"; do
+        if [ -e "$file" ]; then
+            git add "$file"
+            echo "File '$file' added to Git."
+        else
+            echo "Error: File '$file' not found."
+            echo "Do you want to specify another file or skip? (enter file name or 's' to skip)"
+            read retry_add
+            if [ "$retry_add" = "s" ]; then
+                continue
+            fi
+            files_to_add+=("$retry_add")
+        fi
+    done
+
+    echo "Enter commit message for the added files: (remember to give details in commit)"
+    read commit_message
+    git commit -m "$commit_message"
+
+    echo "Enter the name of the remote branch to push to:"
+    read remote_branch
+    git push origin "$remote_branch"
+
+    echo "Git operations completed."
+    echo
+    echo "Press CTRL+X to return to the main menu."
+    while : ; do
+        read -rsn1 input
+        if [ "$input" = $'\x18' ]; then  # CTRL+X
+            break
+        fi
+    done
+}
+
+# Function to display internal help
+display_internal_help() {
+    clear
+    echo "Interactive Help System"
+    echo "-----------------------"
+    echo "1. Create a main file: Creates a new main file with specified content and optional permissions."
+    echo "2. Create secondary files: Creates multiple secondary files with specified content."
+    echo "3. Handle C files: Compile a specified C file."
+    echo "4. Handle Git: Add files to Git, commit, and push to a remote branch."
+    echo "5. View command --help: Display the help output of a specified command."
+    echo "6. View command man page: Display the man page of a specified command."
+    echo "7. Create alias: Create a new alias and add it permanently to the system."
+    echo
+    echo "Press CTRL+X to return to the main menu."
+    
+    # Wait for CTRL+X
+    while : ; do
+        read -rsn1 input
+        if [ "$input" = $'\x18' ]; then  # CTRL+X
+            break
+        fi
+    done
+}
+
+# Function to display command --help
+display_command_help() {
+    clear
+    echo "Enter the command to display its --help output:"
+    read command
+    clear
+    $command --help 2>&1
+    
+    echo
+    echo "Press CTRL+X to return to the main menu."
+    
+    # Wait for CTRL+X
+    while : ; do
+        read -rsn1 input
+        if [ "$input" = $'\x18' ]; then  # CTRL+X
+            break
+        fi
+    done
+}
+
+# Function to display command man page
+display_command_man() {
+    clear
+    echo "Enter the command to display its man page:"
+    read command
+    clear
+    man $command
+    
+    echo
+    echo "Press CTRL+X to return to the main menu."
+    
+    # Wait for CTRL+X
+    while : ; do
+        read -rsn1 input
+        if [ "$input" = $'\x18' ]; then  # CTRL+X
+            break
+        fi
+    done
+}
+
+# Function to create a new alias
+create_alias() {
+    clear
+    echo "Enter the name of the new alias:"
+    read alias_name
+    echo "Enter the command for the alias '$alias_name':"
+    read alias_command
+
+    # Determine the shell and corresponding configuration file
+    case "$SHELL" in
+        */bash) shell_config_file=~/.bashrc ;;
+        */zsh)  shell_config_file=~/.zshrc ;;
+        *)      echo "Unsupported shell. Please add the alias manually." ; return ;;
+    esac
+
+    # Add the alias to the shell configuration file
+    echo "alias $alias_name='$alias_command'" >> "$shell_config_file"
+
+    # Reload the shell configuration file
+    source "$shell_config_file"
+
+    echo "Alias '$alias_name' added successfully. It will be available in new terminal sessions."
+    echo
+    echo "Press CTRL+X to return to the main menu."
+
+    # Wait for CTRL+X
+    while : ; do
+        read -rsn1 input
+        if [ "$input" = $'\x18' ]; then  # CTRL+X
+            break
+        fi
+    done
+}
+
+# Main menu
+while true; do
+    clear
+	echo
+	print_banner
+    echo
+    echo "Main Menu:"
+    echo "1. Create a main file"
+    echo "2. Create secondary files"
+    echo "3. compiling C files"
+    echo "4. Handle Git"
+    echo "5. Help"
+    echo "6. Create alias"
+    echo "0. Quit"
+    read -p "Choose an option: " choice
+
+    case $choice in
+        1) create_main_file ;;
+        2) create_secondary_files ;;
+        3) handle_c_files ;;
+        4) handle_git ;;
+        5)
+            clear
+            echo "Help Menu:"
+            echo "1. Internal help"
+            echo "2. Command --help"
+            echo "3. Command man page"
+            echo "0. Return to main menu"
+            read -p "Choose an option: " help_choice
+            case $help_choice in
+                1) display_internal_help ;;
+                2) display_command_help ;;
+                3) display_command_man ;;
+                0) ;;
+                *) echo "Invalid option." ;;
+            esac
+            ;;
+        6) create_alias ;;
+        0) clear && print_footer_banner && sleep 2 && exit ;;
+        *) echo "Invalid option." ;;
+    esac
+done
+
+#####################################################################################################################
+# This is the end... My friend, thanx for reading this far. Now, let's restore the IFS to its former value			#
+#####################################################################################################################
+
+IFS=$ 	
