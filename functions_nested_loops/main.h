@@ -31,4 +31,8 @@ void times_table(void);
 
 int from_0_to_9(void);
 
+int add(int, int);
+
+
+
 #endif
