@@ -1,9 +1,5 @@
-	.file	"100-main.c"
+	.file	"main.c"
 	.intel_syntax noprefix
-	.text
-	.section	.rodata
-.LC0:
-	.string	"GNU"
 	.text
 	.globl	main
 	.type	main, @function
@@ -16,9 +12,6 @@ main:
 	.cfi_offset 6, -16
 	mov	rbp, rsp
 	.cfi_def_cfa_register 6
-	lea	rax, .LC0[rip]
-	mov	rdi, rax
-	call	puts@PLT
 	mov	eax, 0
 	pop	rbp
 	.cfi_def_cfa 7, 8
