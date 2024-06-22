@@ -7,5 +7,6 @@
  */
 int main(void)
 {
+	printf("GNU\n");
 	return (0);
 }
