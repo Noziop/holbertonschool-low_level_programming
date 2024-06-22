@@ -1,0 +1,22 @@
+#!/bin/bash
+export CFILE=100-main.c
+
+if [ -z "$CFILE" ]; then
+	echo "Error : CFILE environment variable is not set"
+	exit 1
+fi
+
+if [ ! -f "$CFILE" ]; then
+	echo "Error: $CFILE does not exist"
+fi
+
+BASENAME=$(basename $CFILE .c)
+
+gcc -S -masm=intel "$CFILE" -o "$BASENAME.s"
+
+if [ $? -eq 0 ]; then
+	echo "assembly code generation is successful : $BASENAME.s"
+else 
+	echo "ERROR : something went wrong"
+	exit 1
+fi
