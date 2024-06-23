@@ -22,8 +22,10 @@ void print_times_table(int n)
 			product = i * j;
 
 			if (j != 0)
+			{
 				spacer();
-			print_spaces(product);
+				print_spaces(product);
+			}
 			print_number(product);
 		}
 		_putchar('\n');
