@@ -2,10 +2,8 @@
 
 /**
  * print_triangle - prints a triangle to stdout
- * @param size:length of triangle
+ * @size: size of the triangle
  */
-
-
 void print_triangle(int size)
 {
 	int i, j;
@@ -16,7 +14,7 @@ void print_triangle(int size)
 	}
 	else
 	{
-		for (i = 0; i < size; i++)
+		for (i = 1; i <= size; i++)
 		{
 			for (j = 0; j < size - i; j++)
 			{
@@ -26,7 +24,7 @@ void print_triangle(int size)
 			{
 				_putchar('#');
 			}
-		_putchar('\n');
+			_putchar('\n');
 		}
 	}
 }
