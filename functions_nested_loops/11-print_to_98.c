@@ -5,7 +5,7 @@
  *print_to_98 - entry point
  *@n: value transmitted for main
  *
- * Description: prints from value transmitted by main to 98.
+ * Description: prints number from value transmitted by main to 98.
  * Return: 0 if successful
  */
 
