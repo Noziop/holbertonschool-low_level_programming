@@ -10,7 +10,7 @@ void puts_half(char *str)
 	int half = len / 2;
 	int i;
 
-	if (len % 2 == 0)
+	if (half % 2 == 0)
 	{
 		for (i = half; i < len; i++)
 		{
@@ -19,14 +19,14 @@ void puts_half(char *str)
 	}
 	else
 	{
-		for (i = half; i < len - 1; i++)
+		for (i = half + 1; i < len; i++)
 		{
 			_putchar(str[i]);
 		}
 	}
 	_putchar('\n');
 }
-
+a
 /**
  * _strlen - calculate the length of a string
  *@s: string to be tested
