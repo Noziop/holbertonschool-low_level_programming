@@ -6,26 +6,31 @@
  */
 void rev_string(char *s)
 {
-	print_rev(s);
+	char *start = s;
+	char *end = s + _strlen(s) - 1;
+	
+	while (start < end)
+	{
+		char temp = *start;
+		*start = *end;
+		*end = temp;
+		start ++;
+		end --;
+	}
 }
 
 /**
- * print_rev - print a string in reverse mode
- *@s: string to be printed
+ * _strlen - calculate the length of a string
+ *@s: string to be tested
+ * Return: length of string
  */
-void print_rev(char *s)
-{
-	int i = 0;
 
-	while (s[i] != '\0')
+int _strlen(char *s)
+{
+	int i;
+
+	for (i = 0; s[i] != '\0'; i++)
 	{
-		i++;
 	}
-	i--;
-	while (i >= 0)
-	{
-		_putchar(s[i]);
-		i--;
-	}
-	_putchar('\n');
+	return (i);
 }
