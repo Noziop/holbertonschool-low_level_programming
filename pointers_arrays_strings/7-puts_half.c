@@ -26,7 +26,7 @@ void puts_half(char *str)
 	}
 	_putchar('\n');
 }
-a
+
 /**
  * _strlen - calculate the length of a string
  *@s: string to be tested
