@@ -10,7 +10,7 @@ int _atoi(char *s)
 {
 	int i;
 	int n = 0;
-	int result = 0;
+	__int128_t result = 0;
 
 	for (i = 0; s[i] != '\0'; i++)
 	{
@@ -31,7 +31,6 @@ int _atoi(char *s)
 			break;
 		}
 	}
-
 	if (n % 2 != 0)
 	{
 		result = -result;
