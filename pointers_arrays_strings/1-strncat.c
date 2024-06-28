@@ -2,11 +2,11 @@
 
 /**
  * _strncat - function that concatenates two strings
- *@dest:
- *@src:
- *@n:
+ *@dest: string to be append with src
+ *@src: string to append in dest
+ *@n: number of chars of string to be append in dest
  *
- * Return:
+ * Return: dest
  */
 
 char *_strncat(char *dest, char *src, int n)
