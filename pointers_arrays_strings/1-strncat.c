@@ -22,18 +22,9 @@ char *_strncat(char *dest, char *src, int n)
 	}
 	while (src[j] != '\0' && j < n)
 	{
-		__int128_t dest_len = sizeof(dest);
-
-		if (i + j + 1 <= dest_len)
-		{
 			bla[i] = src[j];
 			i++;
 			j++;
-    	}
-		else
-		{
-			break;
-		}
 	}
 	bla[i + j] = '\0';
 	return (bla);
