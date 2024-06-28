@@ -10,18 +10,28 @@
 char *cap_string(char *str)
 {
 	int index = 0;
-	int is_separator = 1;
 
 	while (str[index])
 	{
-		if (is_separator && str[index] >= 'a' && str[index] <= 'z')
-		{
-			str[index] -= 'a' - 'A';
-		}
+		while (!(str[index] >= 'a' && str[index] <= 'z'))
+			index++;
 
-		is_separator = !((str[index] >= 'a' && str[index] <= 'z') ||
-						(str[index] >= 'A' && str[index] <= 'Z') ||
-						(str[index] >= '0' && str[index] <= '9'));
+		if (str[index - 1] == ' ' ||
+		    str[index - 1] == '\t' ||
+		    str[index - 1] == '\n' ||
+		    str[index - 1] == ',' ||
+		    str[index - 1] == ';' ||
+		    str[index - 1] == '.' ||
+		    str[index - 1] == '!' ||
+		    str[index - 1] == '?' ||
+		    str[index - 1] == '"' ||
+		    str[index - 1] == '(' ||
+		    str[index - 1] == ')' ||
+		    str[index - 1] == '{' ||
+		    str[index - 1] == '}' ||
+		    index == 0)
+			str[index] -= 32;
+
 		index++;
 	}
 
