@@ -3,7 +3,7 @@
 /**
  * _strncpy - copies a string
  * @dest: destination
- * @src: soource
+ * @src: source
  * @n: number of char to cpy
  *
  * Return: dest
@@ -19,7 +19,7 @@ char *_strncpy(char *dest, char *src, int n)
 		dest[i] = src[j];
 		i++;
 		j++;
-  	}
+	}
 	dest[i + j] = '\0';
 	return (dest);
 }
