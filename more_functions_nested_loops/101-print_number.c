@@ -14,14 +14,31 @@ void print_number(int n)
 		n = -n;
 	}
 
-	if (n < 10)
+	if (n == -2147483648)
 	{
-		_putchar(n + '0');
-		return;
+		_putchar('2');
+		_putchar('1');
+		_putchar('4');
+		_putchar('7');
+		_putchar('4');
+		_putchar('8');
+		_putchar('3');
+		_putchar('6');
+		_putchar('4');
+		_putchar('8');
 	}
+	else
+	{
 
-	last_digit = n % 10;
+		if (n < 10)
+		{
+			_putchar(n + '0');
+			return;
+		}
 
-	print_number(n / 10);
-	_putchar(last_digit + '0');
+		last_digit = n % 10;
+
+		print_number(n / 10);
+		_putchar(last_digit + '0');
+	}
 }
