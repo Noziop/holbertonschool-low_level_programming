@@ -6,6 +6,8 @@
  */
 void print_number(int n)
 {
+	int last_digit;
+	
 	if (n < 0)
 	{
 		_putchar('-');
@@ -18,6 +20,8 @@ void print_number(int n)
 		return;
 	}
 
+	last_digit = n % 10;
+
 	print_number(n / 10);
-	_putchar((n % 10) + '0');
+	_putchar(last_digit + '0');
 }
