@@ -27,25 +27,25 @@ int _strlen(char *s)
  */
 char *infinite_add(char *n1, char *n2, char *r, int size_r)
 {
-    int l1 = _strlen(n1) - 1, l2 = _strlen(n2) - 1, carry = 0;
-    int sum, i = size_r - 2;
+	int l1 = _strlen(n1) - 1, l2 = _strlen(n2) - 1, carry = 0;
+	int sum, i = size_r - 2;
 
-    r[size_r - 1] = '\0';
+	r[size_r - 1] = '\0';
 
-    while (l1 >= 0 || l2 >= 0 || carry)
-    {
-        if (i < 0)
-            return 0;
+	while (l1 >= 0 || l2 >= 0 || carry)
+	{
+		if (i < 0)
+			return (0);
 
-        sum = carry;
-        if (l1 >= 0)
-            sum += n1[l1--] - '0';
-        if (l2 >= 0)
-            sum += n2[l2--] - '0';
+		sum = carry;
+		if (l1 >= 0)
+			sum += n1[l1--] - '0';
+		if (l2 >= 0)
+			sum += n2[l2--] - '0';
 
-        carry = sum / 10;
-        r[i--] = (sum % 10) + '0';
-    }
+		carry = sum / 10;
+		r[i--] = (sum % 10) + '0';
+	}
 
-    return &r[i + 1];
+	return (&r[i + 1]);
 }
