@@ -1,51 +1,51 @@
-#include <stdio.h>
+#include "main.h"
 
 /**
- * print_buffer - Prints a buffer 10 bytes at a time, starting with
- *                the byte position, then showing the hex content,
- *                then displaying printable charcaters.
- * @b: The buffer to be printed.
- * @size: The number of bytes to be printed from the buffer.
+ * _strlen - calculate the length of a string
+ *@s: string to be tested
+ * Return: length of string
  */
-void print_buffer(char *b, int size)
+
+int _strlen(char *s)
 {
-	int byte, index;
+	int i;
 
-	for (byte = 0; byte < size; byte += 10)
+	for (i = 0; s[i] != '\0'; i++)
 	{
-		printf("%08x: ", byte);
+	}
+	return (i);
+}
 
-		for (index = 0; index < 10; index++)
-		{
-			if ((index + byte) >= size)
-				printf("  ");
 
-			else
-				printf("%02x", *(b + index + byte));
+/**
+ * infinite_add - additionne deux nombres
+ * @n1: premier nombre
+ * @n2: deuxième nombre
+ * @r: buffer pour stocker le résultat
+ * @size_r: taille du buffer
+ * Return: pointeur vers le résultat, ou 0 si impossible
+ */
+char *infinite_add(char *n1, char *n2, char *r, int size_r)
+{
+	int l1 = _strlen(n1) - 1, l2 = _strlen(n2) - 1, carry = 0;
+	int sum, i = size_r - 2;
 
-			if ((index % 2) != 0 && index != 0)
-				printf(" ");
-		}
+	r[size_r - 1] = '\0';
 
-		for (index = 0; index < 10; index++)
-		{
-			if ((index + byte) >= size)
-				break;
+	while (l1 >= 0 || l2 >= 0 || carry)
+	{
+		if (i < 0)
+			return (0);
 
-			else if (*(b + index + byte) >= 31 &&
-				 *(b + index + byte) <= 126)
-				printf("%c", *(b + index + byte));
+		sum = carry;
+		if (l1 >= 0)
+			sum += n1[l1--] - '0';
+		if (l2 >= 0)
+			sum += n2[l2--] - '0';
 
-			else
-				printf(".");
-		}
-
-		if (byte >= size)
-			continue;
-
-		printf("\n");
+		carry = sum / 10;
+		r[i--] = (sum % 10) + '0';
 	}
 
-	if (size <= 0)
-		printf("\n");
+	return (&r[i + 1]);
 }
