@@ -48,7 +48,7 @@ This repository contains programs written for the low-level programming and algo
 
 ## Usage
 
-* All files were created and compiled on Ubuntu 14.04.4 LTS using gcc 4.8.4 with the command `gcc -Wall -Werror -Wextra -pedantic *.c -o executable_name`
+* All files were created and compiled on Ubuntu 24.04.4 LTS using gcc 4.8.4 with the command `gcc -Wall -Werror -Wextra -pedantic *.c -o executable_name`
 * All files end with a new line
 * Code uses the Betty style for checking using `betty-style.pl` and `betty-doc.pl`
 
@@ -58,7 +58,7 @@ This repository contains programs written for the low-level programming and algo
 
 ## Acknowledgments
 
-* Holberton School - providing the opportunity to learn and grow as a software engineer
+* **Holberton School** - providing the opportunity to learn and grow as a software engineer
 
 ## License
 
