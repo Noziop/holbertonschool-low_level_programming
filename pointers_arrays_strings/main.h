@@ -41,4 +41,7 @@ void print_diagsums(int *a, int size);
 void _puts_recursion(char *s);
 void _print_rev_recursion(char *s);
 void set_string(char **s, char *to);
+int is_palindrome(char *s);
+int check_palindrome(char *s, int start, int end);
+int is_palindrome_helper(char *s);
 #endif

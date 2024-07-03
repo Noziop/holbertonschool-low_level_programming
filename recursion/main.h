@@ -45,5 +45,7 @@ int factorial(int n);
 int _sqrt_helper(int n, int guess);
 int _sqrt_recursion(int n);
 int is_prime_number(int n);
-
+int is_palindrome(char *s);
+int check_palindrome(char *s, int start, int end);
+int is_palindrome_helper(char *s);
 #endif
