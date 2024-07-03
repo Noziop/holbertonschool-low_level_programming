@@ -18,7 +18,7 @@ In this project, we explore:
 * `3-mul.c`: Program that multiplies two numbers.
 * `4-add.c`: Program that adds positive numbers.
 
-## Requirements
+## Requirements and Limitations
 
 * Programs will be compiled on Ubuntu 20.04 LTS using gcc with the options -Wall -Werror -Wextra -pedantic -std=gnu89
 * All files should end with a new line
