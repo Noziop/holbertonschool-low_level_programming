@@ -1,10 +1,5 @@
 #include "main.h"
 
-/**
- * add_cohort - Add a new cohort to the school
- * @school: Pointer to the School structure
- * @cohort_name: Name of the new cohort
- */
 void add_cohort(School *school, const char *cohort_name)
 {
 	Cohort *new_cohorts;
@@ -12,27 +7,18 @@ void add_cohort(School *school, const char *cohort_name)
 	new_cohorts = safe_malloc((school->cohort_count + 1) * sizeof(Cohort));
 	if (school->cohorts)
 	{
-		memcpy(new_cohorts, school->cohorts,
-			   school->cohort_count * sizeof(Cohort));
+		memcpy(new_cohorts, school->cohorts, school->cohort_count * sizeof(Cohort));
 		free(school->cohorts);
 	}
 	school->cohorts = new_cohorts;
 
-	strncpy(school->cohorts[school->cohort_count].name, cohort_name,
-			MAX_COHORT_NAME_LENGTH - 1);
+	strncpy(school->cohorts[school->cohort_count].name, cohort_name, MAX_COHORT_NAME_LENGTH - 1);
 	school->cohorts[school->cohort_count].name[MAX_COHORT_NAME_LENGTH - 1] = '\0';
 	school->cohorts[school->cohort_count].students = NULL;
 	school->cohorts[school->cohort_count].student_count = 0;
 	school->cohort_count++;
 }
 
-/**
- * find_cohort - Find a cohort by name
- * @school: Pointer to the School structure
- * @cohort_name: Name of the cohort to find
- *
- * Return: Pointer to the found Cohort, or NULL if not found
- */
 Cohort *find_cohort(School *school, const char *cohort_name)
 {
 	int i;
@@ -40,19 +26,12 @@ Cohort *find_cohort(School *school, const char *cohort_name)
 	for (i = 0; i < school->cohort_count; i++)
 	{
 		if (strcmp(school->cohorts[i].name, cohort_name) == 0)
-			return (&school->cohorts[i]);
+			return &school->cohorts[i];
 	}
-	return (NULL);
+	return NULL;
 }
 
-/**
- * load_cohort_from_file - Load students for a cohort from a file
- * @school: Pointer to the School structure
- * @cohort_name: Name of the cohort to load
- * @filename: Name of the file containing student names
- */
-void load_cohort_from_file(School *school, const char *cohort_name,
-						   const char *filename)
+void load_cohort_from_file(School *school, const char *cohort_name, const char *filename)
 {
 	FILE *file;
 	char line[MAX_NAME_LENGTH];
@@ -76,5 +55,30 @@ void load_cohort_from_file(School *school, const char *cohort_name,
 	}
 
 	fclose(file);
+}
+
+int create_new_cohort(School *school, const char *cohort_name)
+{
+	char filename[20];
+	FILE *file;
+
+	if (find_cohort(school, cohort_name) != NULL)
+	{
+		printf("Error: Cohort %s already exists\n", cohort_name);
+		return 0;
+	}
+
+	snprintf(filename, sizeof(filename), "%s.txt", cohort_name);
+	file = fopen(filename, "w");
+	if (!file)
+	{
+		printf("Error: Unable to create file %s\n", filename);
+		return 0;
+	}
+	fclose(file);
+
+	add_cohort(school, cohort_name);
+	printf("Cohort %s created successfully\n", cohort_name);
+	return 1;
 }
 

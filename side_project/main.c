@@ -1,22 +1,13 @@
 #include "main.h"
 
-/**
- * print_usage - Print usage information
- * @program_name: Name of the program
- */
 void print_usage(const char *program_name)
 {
-	printf("Usage: %s [-o output.csv] <number_of_draws> <cohort1> [cohort2] ...\n", program_name);
+	printf("Usage: %s [-o output.csv] [-c cohort_name] <number_of_draws> <cohort1> [cohort2] ...\n", program_name);
 	printf("Options:\n");
 	printf("  -o <file>    Output results to a CSV file\n");
+	printf("  -c <cohort>  Create a new cohort\n");
 }
 
-/**
- * main - Entry point of the program
- * @argc: Number of command-line arguments
- * @argv: Array of command-line argument strings
- * Return: 0 on success, 1 on failure
- */
 int main(int argc, char *argv[])
 {
 	School *holberton;
@@ -27,7 +18,28 @@ int main(int argc, char *argv[])
 	if (argc < 3)
 	{
 		print_usage(argv[0]);
-		return (1);
+		return 1;
+	}
+
+	holberton = initialize_school();
+	if (!holberton)
+		return 1;
+
+	if (strcmp(argv[1], "-c") == 0)
+	{
+		if (argc != 3)
+		{
+			print_usage(argv[0]);
+			free_school(holberton);
+			return 1;
+		}
+		if (create_new_cohort(holberton, argv[2]))
+		{
+			free_school(holberton);
+			return 0;
+		}
+		free_school(holberton);
+		return 1;
 	}
 
 	if (strcmp(argv[1], "-o") == 0)
@@ -35,7 +47,8 @@ int main(int argc, char *argv[])
 		if (argc < 5)
 		{
 			print_usage(argv[0]);
-			return (1);
+			free_school(holberton);
+			return 1;
 		}
 		output_file = argv[2];
 		arg_index = 3;
@@ -45,15 +58,12 @@ int main(int argc, char *argv[])
 	if (num_draws <= 0)
 	{
 		printf("Error: Invalid number of draws\n");
-		return (1);
+		free_school(holberton);
+		return 1;
 	}
 
 	selected_cohorts = (const char **)&argv[arg_index];
 	selected_cohort_count = argc - arg_index;
-
-	holberton = initialize_school();
-	if (!holberton)
-		return (1);
 
 	for (i = 0; i < selected_cohort_count; i++)
 	{
@@ -67,5 +77,6 @@ int main(int argc, char *argv[])
 	perform_draw(holberton, selected_cohorts, selected_cohort_count, num_draws, output_file);
 
 	free_school(holberton);
-	return (0);
+	return 0;
 }
+
