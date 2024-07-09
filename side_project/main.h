@@ -23,7 +23,7 @@ void print_school_info(School *school);
 
 /* draw_functions.c */
 void perform_draw(School *school, const char **selected_cohorts,
-int selected_cohort_count, int num_draws, const char *output_file);
+int selected_cohort_count, int num_draws, const char +*output_file);
 void shuffle_array(int *array, int n);
 void write_to_csv(const char *filename, char ***results, int num_draws,
                   int students_per_draw);
