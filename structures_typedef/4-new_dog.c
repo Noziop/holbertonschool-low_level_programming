@@ -68,17 +68,17 @@ char *_strncpy(char *dest, char *src, int n)
 }
 
 /**
- * __strlen - calculate the length of a string
- *@s: string to be tested
- * Return: length of string
+ * _strlen - Calculates the length of a string.
+ * @s: The string to measure.
+ *
+ * Return: The length of the string.
  */
-
-int __strlen(char *s)
+int _strlen(char *s)
 {
-	int i;
+    int i;
 
-	for (i = 0; s[i] != '\0'; i++)
-	{
-	}
-	return (i);
+    for (i = 0; s[i] != '\0'; i++)
+    {
+    }
+    return (i);
 }
