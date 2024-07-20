@@ -20,13 +20,13 @@ This project explores variadic functions in C, which are functions that can acce
 
 ## Compilation and Testing
 To compile each function with its corresponding main file, use:
-
+```bash
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 [main-file.c] [function-file.c] -o [output]
-
+```
 Example:
-
+```bash
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 0-main.c 0-sum_them_all.c -o sum
-
+```
 
 ## Usage Examples
 
