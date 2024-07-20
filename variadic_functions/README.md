@@ -9,9 +9,14 @@ This project explores variadic functions in C, which are functions that can acce
 | ------ | ------ |
 | variadic_functions.h | Header file containing function prototypes and necessary includes |
 | 0-sum_them_all.c | Function that returns the sum of all its parameters |
+| 0-main.c | programm to test 0-sum_them_all.c |
 | 1-print_numbers.c | Function that prints numbers, followed by a new line |
+| 1-main.c | programm to test 1-print_numbers.c |
 | 2-print_strings.c | Function that prints strings, followed by a new line |
+| 2-main.c | programm to test 2-print_strings.c |
 | 3-print_all.c | Function that prints anything |
+| 3-main.c | programm to test 3-print_all.c |
+| compile_and_exec_C_files.sh | Bash script to compile and execute the c programs with the provided exemple, or users emxaples |
 
 ## Requirements
 - Compiled on Ubuntu 20.04 LTS using gcc

@@ -5,3 +5,4 @@ _putchar.c
 **.vscode/
 !side_project/main.c
 !side_project_goto_html/main.c
+**exec/
