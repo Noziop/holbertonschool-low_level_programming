@@ -65,6 +65,25 @@ int main(void)
 Output: H, 0, Hello, World
 ```
 
+## Using the compile_and_exec_C_files.sh to compile and execute the C programs :
+
+be sur to download the entire  directory.
+
+execute the script : `./compile_and_exec_C_files.sh`
+
+the program will ask you if you want to test with your own exemples, just follow the script's flow : 
+
+```bash
+Programme de démonstration des fonctions variadiques en C
+Ce programme permet de tester différentes fonctions variadiques :
+  - sum_them_all : Somme tous les arguments passés
+  - print_numbers : Affiche une liste de nombres
+  - print_strings : Affiche une liste de chaînes de caractères
+  - print_all : Affiche différents types de données
+
+Voulez-vous tester avec vos propres exemples ? (o/n) :
+```
+
 ## Learning Objectives
 - Understanding variadic functions in C
 - Using va_start, va_arg, and va_end macros
