@@ -1,11 +1,10 @@
 #include "lists.h"
 
 /**
- * print_list - imprime tous les éléments d'une liste liée
+ * print_list - Prints all elements of a linked list
+ * @h: Pointer to the head of the list
  *
- * @h: pointeur vers la tête de la liste
- *
- * Return: le nombre d'éléments dans la liste
+ * Return: The number of elements in the list
  */
 size_t print_list(const list_t *h)
 {
