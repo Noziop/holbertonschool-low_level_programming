@@ -1,9 +1,9 @@
 #include "lists.h"
 
 /**
- * free_list - libère la mémoire allouée pour la liste
+ * free_list - free allocated memory for the list
  *
- * @head: pointeur vers la tête de la liste
+ * @head: pointer to the head of list
  *
  * Return: none
  */

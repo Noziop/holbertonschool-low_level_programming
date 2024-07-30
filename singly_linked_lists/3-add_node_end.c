@@ -15,7 +15,6 @@ list_t *add_node_end(list_t **head, const char *str)
 	list_t *last_node;
 	unsigned int len = 0;
 
-	/* Calculate the length of the string */
 	while (str[len])
 		len++;
 
