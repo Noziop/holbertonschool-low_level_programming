@@ -1,0 +1,33 @@
+[Début]
+   |
+   v
+[Vérifier si filename est NULL]
+   |
+   +---> [Si oui] --> [Retourner 0]
+   |
+   +---> [Si non] --> [Ouvrir le fichier en lecture]
+              |
+              v
+[Vérifier si l'ouverture a réussi]
+   |
+   +---> [Si non] --> [Retourner 0]
+   |
+   +---> [Si oui] --> [Allouer un buffer]
+              |
+              v
+[Lire letters caractères du fichier]
+   |
+   v
+[Écrire le contenu lu sur la sortie standard]
+   |
+   v
+[Fermer le fichier]
+   |
+   v
+[Libérer le buffer]
+   |
+   v
+[Retourner le nombre de caractères lus et écrits]
+   |
+   v
+[Fin]

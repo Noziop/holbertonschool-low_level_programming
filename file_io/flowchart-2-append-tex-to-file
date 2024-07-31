@@ -1,0 +1,26 @@
+[Début]
+   |
+   v
+[Vérifier si filename est NULL]
+   |
+   +---> [Si oui] --> [Retourner -1]
+   |
+   +---> [Si non] --> [Ouvrir le fichier en mode ajout]
+              |
+              v
+[Vérifier si l'ouverture a réussi]
+   |
+   +---> [Si non] --> [Retourner -1]
+   |
+   +---> [Si oui] --> [Vérifier si text_content est NULL]
+              |
+              +---> [Si oui] --> [Fermer le fichier] --> [Retourner 1]
+              |
+              +---> [Si non] --> [Écrire text_content à la fin du fichier]
+                          |
+                          v
+              [Vérifier si l'écriture a réussi]
+                          |
+                          +---> [Si non] --> [Fermer le fichier] --> [Retourner -1]
+                          |
+                          +---> [Si oui] --> [Fermer le fichier] --> [Retourner 1]
